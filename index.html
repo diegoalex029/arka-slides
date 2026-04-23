@@ -6,455 +6,649 @@
     <title>ARKA — Plataforma de E-Commerce</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/theme/black.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
     <style>
         :root {
-            --primary: #00D4AA;
-            --secondary: #FF6B6B;
-            --dark: #1a1a2e;
-            --card: #16213e;
+            --bg: #1e1e2e;
+            --accent: #7C9EFF;
+            --accent2: #FFB347;
+            --text: #f0f0f0;
+            --muted: #9999aa;
+            --line: #ccccd8;
         }
-        .reveal { font-family: 'Segoe UI', sans-serif; }
-        .reveal h1, .reveal h2, .reveal h3 { color: var(--primary); text-transform: none; }
-        .reveal .slides section { text-align: left; }
+        body { background: var(--bg); }
+        .reveal {
+            font-family: 'Segoe UI', sans-serif;
+            color: var(--text);
+            font-size: 22px;
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            color: var(--accent);
+            text-transform: none;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+        .reveal h1 { font-size: 2.4em; }
+        .reveal h2 { font-size: 1.6em; border-bottom: 1px solid var(--line); padding-bottom: 8px; margin-bottom: 24px; }
+        .reveal h3 { font-size: 1.1em; }
+        .reveal .slides section { text-align: left; padding: 20px 40px; }
+        .reveal ul { list-style: none; padding: 0; }
+        .reveal ul li::before { content: "—"; color: var(--accent); margin-right: 10px; }
+        .reveal ul li { margin-bottom: 8px; font-size: 0.85em; color: var(--text); }
+        .reveal code { color: var(--accent); font-size: 0.85em; }
+        .reveal table { width: 100%; font-size: 0.75em; border-collapse: collapse; }
+        .reveal th { color: var(--accent); border-bottom: 1px solid var(--line); padding: 8px 12px; font-weight: 400; text-align: left; }
+        .reveal td { padding: 8px 12px; border-bottom: 1px solid var(--line); color: var(--text); }
         .tag {
             display: inline-block;
-            background: var(--primary);
-            color: #000;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.6em;
-            font-weight: bold;
-            margin: 4px;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            margin: 3px;
         }
-        .tag.red { background: var(--secondary); }
-        .card {
-            background: var(--card);
-            border: 1px solid var(--primary);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 10px;
+        .tag.muted { border-color: var(--muted); color: var(--muted); }
+        .tag.a2 { border-color: var(--accent2); color: var(--accent2); }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+        .section-card {
+            border-left: 2px solid var(--accent);
+            padding: 12px 16px;
+            margin-bottom: 14px;
         }
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .grid-3 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 15px;
-        }
-        .icon { font-size: 2em; margin-bottom: 10px; }
-        .highlight { color: var(--primary); font-weight: bold; }
-        .small { font-size: 0.7em; }
-        .center { text-align: center; }
-        .ms-card {
-            background: var(--card);
-            border-left: 4px solid var(--primary);
-            border-radius: 8px;
-            padding: 15px 20px;
-            margin: 10px 0;
-        }
-        .flow-step {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin: 10px 0;
-            padding: 10px 15px;
-            background: var(--card);
-            border-radius: 8px;
-        }
-        .flow-arrow {
-            color: var(--primary);
-            font-size: 1.5em;
-        }
-        table { width: 100%; font-size: 0.7em; }
-        th { background: var(--primary); color: #000; padding: 8px; }
-        td { padding: 8px; border-bottom: 1px solid #333; }
+        .section-card.muted { border-color: var(--muted); }
+        .section-card.a2 { border-left-color: var(--accent2); }
+        .section-card p { margin: 0; }
+        .section-card .title { color: var(--accent); font-size: 0.85em; margin-bottom: 4px; }
+        .section-card .title.muted { color: var(--muted); }
+        .section-card .title.a2 { color: var(--accent2); }
+        .section-card .desc { color: var(--muted); font-size: 0.75em; }
+        .flow { display: flex; flex-direction: column; gap: 6px; }
+        .flow-item { display: flex; align-items: center; gap: 12px; font-size: 0.8em; }
+        .flow-item .service { color: var(--accent); min-width: 140px; font-size: 0.9em; }
+        .flow-item .service.a2 { color: var(--accent2); }
+        .flow-item .desc { color: var(--muted); }
+        .flow-arrow { color: var(--line); font-size: 0.8em; padding-left: 20px; }
+        .center { text-align: center !important; }
+        .muted { color: var(--muted); }
+        .accent { color: var(--accent); }
+        .accent2 { color: var(--accent2); }
+        .small { font-size: 0.8em; }
+        .divider { border: none; border-top: 1px solid var(--line); margin: 20px 0; }
+        .reveal ul li.a2::before { color: var(--accent2); }
+        .reveal ul li.a2 { color: var(--accent2); }
     </style>
 </head>
 <body>
 <div class="reveal">
 <div class="slides">
 
-<!-- ═══════════════════════════════════════ -->
 <!-- SLIDE 1 — PORTADA -->
-<!-- ═══════════════════════════════════════ -->
-<section data-background="#1a1a2e" class="center">
-    <div style="text-align:center">
-        <h1 style="font-size:3em; margin-bottom:0">ARKA</h1>
-        <p style="color:#aaa; font-size:1.2em; margin-top:0">Plataforma de E-Commerce</p>
-        <hr style="border-color: var(--primary); width:200px; margin: 30px auto">
-        <p style="color:#aaa">Arquitectura de Microservicios</p>
+<section data-background="#1e1e2e" class="center">
+    <div style="text-align:center; padding-top: 60px">
+        <h1 style="font-size:3.5em; margin-bottom:4px; font-weight:300; letter-spacing:0.1em">ARKA</h1>
+        <p style="color:var(--muted); font-size:1em; margin-top:0">Plataforma de E-Commerce</p>
+        <hr style="border:none; border-top:1px solid var(--line); width:120px; margin:30px auto">
+        <p style="color:var(--muted); font-size:0.8em">Arquitectura de Microservicios — Spring Boot · Kafka · AWS</p>
         <div style="margin-top:40px">
-            <span class="tag">Spring Boot</span>
-            <span class="tag">Kafka</span>
-            <span class="tag">AWS</span>
-            <span class="tag">Docker</span>
-            <span class="tag">PostgreSQL</span>
+            <span class="tag">Java 17</span>
+            <span class="tag">Spring Boot 4</span>
+            <span class="tag a2">WebFlux</span>
+            <span class="tag a2">Kafka</span>
+            <span class="tag a2">AWS</span>
+            <span class="tag a2">Docker</span>
         </div>
-        <p style="margin-top:60px; color:#666; font-size:0.8em">
-            Diego Alexander Zambrano S.
-        </p>
+        <p style="margin-top:60px; color:var(--line); font-size:0.75em">Diego Alexander Zambrano S.</p>
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════ -->
 <!-- SLIDE 2 — QUÉ ES ARKA -->
-<!-- ═══════════════════════════════════════ -->
-<section data-background="#1a1a2e">
+<section data-background="#1e1e2e">
     <h2>¿Qué es ARKA?</h2>
-    <p class="small" style="color:#aaa">Plataforma de comercio electrónico de productos tecnológicos</p>
+    <p class="muted small">Plataforma de comercio electrónico de productos tecnológicos basada en microservicios</p>
     <div class="grid-3" style="margin-top:30px">
-        <div class="card center">
-            <div class="icon">📦</div>
-            <p class="highlight">ms-inventory</p>
-            <p class="small">Gestión de productos y stock</p>
-            <span class="tag">:8081</span>
+        <div>
+            <p class="accent" style="font-size:0.9em">ms-inventory</p>
+            <p class="muted small">Gestión de productos y stock</p>
+            <code>:8081</code>
         </div>
-        <div class="card center">
-            <div class="icon">🛒</div>
-            <p class="highlight">ms-orders</p>
-            <p class="small">Gestión de órdenes de compra</p>
-            <span class="tag">:8082</span>
+        <div>
+            <p class="accent2" style="font-size:0.9em">ms-orders</p>
+            <p class="muted small">Gestión de órdenes de compra</p>
+            <code>:8082</code>
         </div>
-        <div class="card center">
-            <div class="icon">🔔</div>
-            <p class="highlight">ms-notifications</p>
-            <p class="small">Envío de notificaciones</p>
-            <span class="tag">:8083</span>
+        <div>
+            <p class="accent" style="font-size:0.9em">ms-notifications</p>
+            <p class="muted small">Envío de notificaciones</p>
+            <code>:8083</code>
         </div>
     </div>
-    <div style="margin-top:30px; text-align:center">
-        <span class="tag">Java 17</span>
-        <span class="tag">Spring Boot 4</span>
-        <span class="tag">WebFlux</span>
-        <span class="tag">R2DBC</span>
-        <span class="tag">Kafka</span>
-        <span class="tag">PostgreSQL</span>
-        <span class="tag">AWS LocalStack</span>
-        <span class="tag">Docker</span>
+    <hr class="divider">
+    <div class="grid-2" style="margin-top:10px">
+        <div>
+            <p class="muted small" style="margin-bottom:8px">Cada servicio tiene</p>
+            <ul>
+                <li>Su propia base de datos PostgreSQL</li>
+                <li>Su propio contenedor Docker</li>
+                <li>Sus propias credenciales en Secrets Manager</li>
+            </ul>
+        </div>
+        <div>
+            <p class="muted small" style="margin-bottom:8px">Se comunican via</p>
+            <ul>
+                <li>API REST para peticiones del cliente</li>
+                <li>Apache Kafka para eventos internos</li>
+                <li>Sin llamadas directas entre servicios</li>
+            </ul>
+        </div>
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- SLIDE 3 — ARQUITECTURA HEXAGONAL -->
-<!-- ═══════════════════════════════════════ -->
-<section data-background="#1a1a2e">
-    <h2>Arquitectura Hexagonal</h2>
-    <p class="small" style="color:#aaa">Ports & Adapters — el dominio no depende de nada externo</p>
+<!-- SLIDE 3 — ARQUITECTURA GENERAL -->
+<section data-background="#1e1e2e">
+    <h2>Arquitectura general</h2>
+    <div class="grid-2" style="margin-top:10px">
+        <div>
+            <p class="muted small" style="margin-bottom:12px">Servicios principales</p>
+            <div class="section-card">
+                <p class="title">API Gateway</p>
+                <p class="desc">Punto de entrada — enruta peticiones</p>
+            </div>
+            <div class="section-card">
+                <p class="title">ms-inventory · ms-orders · ms-notifications</p>
+                <p class="desc">Microservicios independientes</p>
+            </div>
+            <div class="section-card">
+                <p class="title">Apache Kafka</p>
+                <p class="desc">Message broker para eventos asíncronos</p>
+            </div>
+            <div class="section-card">
+                <p class="title">PostgreSQL × 3</p>
+                <p class="desc">Database per service pattern</p>
+            </div>
+        </div>
+        <div>
+            <p class="muted small" style="margin-bottom:12px">Infraestructura AWS</p>
+            <div class="section-card a2">
+                <p class="title a2">Secrets Manager</p>
+                <p class="desc">Credenciales centralizadas</p>
+            </div>
+            <div class="section-card a2">
+                <p class="title a2">S3 + SQS + EventBridge</p>
+                <p class="desc">Reportes programados automáticos</p>
+            </div>
+            <div class="section-card a2">
+                <p class="title a2">SES</p>
+                <p class="desc">Envío de correos — preparado</p>
+            </div>
+            <div class="section-card a2">
+                <p class="title a2">CloudFormation</p>
+                <p class="desc">Infraestructura como código</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 4 — ARQUITECTURA HEXAGONAL -->
+<section data-background="#1e1e2e">
+    <h2>Arquitectura hexagonal</h2>
+    <p class="accent2">Ports & Adapters — el dominio no depende de nada externo</p>
     <div class="grid-2" style="margin-top:20px">
         <div>
-            <div class="ms-card">
-                <p class="highlight">🎯 Domain</p>
-                <p class="small">Lógica de negocio pura — Java sin frameworks</p>
-                <p class="small" style="color:#666">model / usecase</p>
+            <div class="section-card">
+                <p class="title">domain/model</p>
+                <p class="desc">Entidades, value objects, interfaces (puertos) — Java puro sin frameworks</p>
             </div>
-            <div class="ms-card" style="border-color:#FF6B6B">
-                <p class="highlight" style="color:#FF6B6B">⚙️ Infrastructure</p>
-                <p class="small">Adaptadores — implementan los puertos</p>
-                <p class="small" style="color:#666">r2dbc / kafka / rest</p>
+            <div class="section-card">
+                <p class="title">domain/usecase</p>
+                <p class="desc">Lógica de negocio — no conoce Spring, ni DB, ni Kafka</p>
+            </div>
+            <div class="section-card a2">
+                <p class="title a2">driven-adapters</p>
+                <p class="desc">r2dbc-postgresql · async-event-bus</p>
+            </div>
+            <div class="section-card a2">
+                <p class="title a2">entry-points</p>
+                <p class="desc">reactive-web · async-event-handler</p>
             </div>
         </div>
         <div>
-            <div class="card small">
-                <p class="highlight">Principio predominante</p>
-                <p><span class="tag">DIP</span> Dependency Inversion</p>
-                <p style="color:#aaa; margin-top:10px">El caso de uso depende de interfaces, no de implementaciones concretas</p>
+            <p class="muted small" style="margin-bottom:12px">Principios aplicados</p>
+            <ul style="margin-bottom:20px">
+                <li><span class="accent">DIP (Dependency Inversion Principle)</span> — casos de uso dependen de interfaces</li>
+                <li><span class="accent">SRP (Single Responsibility Principle)</span> — cada clase una responsabilidad</li>
+                <li><span class="accent">Repository</span> — abstrae acceso a datos</li>
+                <li><span class="accent">Gateway</span> — abstrae sistemas externos</li>
+            </ul>
+            <hr class="divider">
+            <p class="muted small accent2">¿Cómo cambiar la base de datos?</p>
+            <p class="small">Solo cambia el adaptador — el dominio y los casos de uso no se tocan</p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 5 — COMUNICACIÓN CON KAFKA -->
+<section data-background="#1e1e2e">
+    <h2>Saga coreografiada con Kafka</h2>
+    <p class="accent2">Los servicios reaccionan a eventos — ninguno llama directamente a otro</p>
+    <div class="grid-2" style="margin-top:20px">
+        <div>
+            <p class="muted small" style="margin-bottom:10px">Flujo — agregar item</p>
+            <div class="flow">
+                <div class="flow-item">
+                    <span class="service">ms-orders</span>
+                    <span class="desc text">guarda item <code>PENDING</code></span>
+                </div>
+                <div class="flow-arrow">↓ stock-reserve-requested</div>
+                <div class="flow-item">
+                    <span class="service a2">ms-inventory</span>
+                    <span class="desc">valida stock disponible</span>
+                </div>
+                <div class="flow-arrow">↓ stock-reserved / stock-reserve-failed</div>
+                <div class="flow-item">
+                    <span class="service">ms-orders</span>
+                    <span class="desc">item → <code>RESERVED</code> o <code>FAILED</code></span>
+                </div>
+                <div class="flow-arrow">↓ order-created</div>
+                <div class="flow-item">
+                    <span class="service a2">ms-notifications</span>
+                    <span class="desc">guarda notificación</span>
+                </div>
             </div>
-            <div class="card small" style="margin-top:10px">
-                <p class="highlight">Beneficio clave</p>
-                <p style="color:#aaa">Para cambiar de PostgreSQL a MongoDB — solo cambia el adaptador. El dominio no se toca.</p>
+        </div>
+        <div>
+            <p class="muted small" style="margin-bottom:10px">Tópicos principales</p>
+            <table>
+                <tr><th>Tópico</th><th>Publicado por</th></tr>
+                <tr><td><code>stock-reserve-requested</code></td><td class="muted">ms-orders</td></tr>
+                <tr><td><code>stock-reserved</code></td><td class="muted">ms-inventory</td></tr>
+                <tr><td><code>stock-reserve-failed</code></td><td class="muted">ms-inventory</td></tr>
+                <tr><td><code>order-confirmed</code></td><td class="muted">ms-orders</td></tr>
+                <tr><td><code>order-cancelled</code></td><td class="muted">ms-orders</td></tr>
+                <tr><td><code>order-abandoned</code></td><td class="muted">ms-orders</td></tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 6 — HU1 -->
+<section data-background="#1e1e2e">
+    <h2>HU1 — Registro de productos</h2>
+    <div class="grid-2" style="margin-top:10px">
+        <div>
+            <p class="muted small" style="margin-bottom:10px">Endpoint</p>
+            <code>POST /api/products/register</code>
+            <hr class="divider">
+            <p class="muted small" style="margin-bottom:10px">Validación en DTO</p>
+            <ul>
+                <li>Nombre, precio, stock y categoría requeridos</li>
+                <li>Precio mayor a cero</li>
+                <li>Stock no negativo</li>
+            </ul>
+            <hr class="divider">
+            <p class="muted small">Códigos HTTP</p>
+            <ul>
+                <li><code>200</code> — registro exitoso</li>
+                <li><code>400</code> — campo inválido o faltante</li>
+            </ul>
+        </div>
+        <div>
+            <p class="muted small" style="margin-bottom:10px">Implementación</p>
+            <div class="section-card">
+                <p class="title">GlobalExceptionHandler</p>
+                <p class="desc">Centraliza todos los errores — mapea cada excepción a su código HTTP</p>
+            </div>
+            <div class="section-card a2">
+                <p class="title a2">Persistencia sin JPA — R2DBC</p>
+                <p class="desc">No hay @Entity ni cascade — cada operación es explícita y reactiva</p>
+            </div>
+            <div class="section-card">
+                <p class="title">Categorías como enum</p>
+                <p class="desc">SMARTPHONE · LAPTOP · AUDIO · MONITOR · ACCESSORIES</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- SLIDE 4 — COMUNICACIÓN CON KAFKA -->
-<!-- ═══════════════════════════════════════ -->
-<section data-background="#1a1a2e">
-    <h2>Saga Coreografiada con Kafka</h2>
-    <p class="small" style="color:#aaa">Los servicios no se llaman directamente — reaccionan a eventos</p>
+<!-- SLIDE 7 — HU2 -->
+<section data-background="#1e1e2e">
+    <h2>HU2 — Actualización de stock</h2>
+    <div class="grid-2" style="margin-top:10px">
+        <div>
+            <p class="muted small" style="margin-bottom:10px">Dos formas de actualizar</p>
+            <div class="section-card">
+                <p class="title">Manual — endpoint</p>
+                <p class="desc"><code>PATCH /api/products/updatestock</code></p>
+                <p class="desc">No acepta valores negativos — validado en DTO y en dominio</p>
+            </div>
+            <div class="section-card a2">
+                <p class="title a2">Automática — via Kafka</p>
+                <p class="desc">stock-reserve-requested → RESERVED</p>
+                <p class="desc">stock-release-requested → RELEASED</p>
+                <p class="desc">order-confirmed → DECREASE</p>
+            </div>
+        </div>
+        <div>
+            <p class="muted small" style="margin-bottom:10px">Historial — stock_movements</p>
+            <table>
+                <tr><th>Campo</th><th>Descripción</th></tr>
+                <tr><td>previous_stock</td><td class="muted">Stock antes del cambio</td></tr>
+                <tr><td>new_stock</td><td class="muted">Stock después</td></tr>
+                <tr><td>delta</td><td class="muted">Diferencia</td></tr>
+                <tr><td>type</td><td class="muted">RESERVED · RELEASED · DECREASE</td></tr>
+                <tr><td>reason</td><td class="muted">Motivo del cambio</td></tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 8 — HU3 -->
+<section data-background="#1e1e2e">
+    <h2>HU3 — Reporte de bajo stock</h2>
+    <div class="grid-2" style="margin-top:10px">
+        <div>
+            <p class="muted small" style="margin-bottom:10px">Generación manual</p>
+            <code>GET /api/products/low-stock-report?threshold=10</code>
+            <hr class="divider">
+            <p class="muted small" style="margin-bottom:10px">Generación automática — AWS</p>
+            <div class="flow">
+                <div class="flow-item">
+                    <span class="service a2">EventBridge</span>
+                    <span class="desc">cada 10 minutos</span>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-item">
+                    <span class="service a2">SQS</span>
+                    <span class="desc">cola de mensajes</span>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-item">
+                    <span class="service">ms-inventory</span>
+                    <span class="desc">genera CSV</span>
+                </div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-item">
+                    <span class="service a2">S3</span>
+                    <span class="desc">almacena reporte</span>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p class="muted small" style="margin-bottom:10px">Configuración</p>
+            <div class="section-card">
+                <p class="title">Umbral configurable</p>
+                <p class="desc"><code>inventory.stock.low-threshold: 10</code></p>
+                <p class="desc">Diferente por ambiente sin cambiar código</p>
+            </div>
+            <div class="section-card">
+                <p class="title">Formato de salida</p>
+                <p class="desc">CSV en S3 — <code>reports/low-stock-report-{timestamp}.csv</code></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 9 — HU4 -->
+<section data-background="#1e1e2e">
+    <h2>HU4 — Orden de compra</h2>
+    <div class="grid-2" style="margin-top:10px">
+        <div>
+            <p class="muted small" style="margin-bottom:10px">Estados de la orden</p>
+            <div class="flow">
+                <div class="flow-item">
+                    <span class="service">DRAFT</span>
+                    <span class="desc">carrito activo</span>
+                </div>
+                <div class="flow-arrow">↓ confirmar / cancelar / abandonar</div>
+                <div class="flow-item">
+                    <span class="service">CONFIRMED</span>
+                    <span class="desc">orden confirmada</span>
+                </div>
+                <div class="flow-item">
+                    <span class="service">ABANDONED</span>
+                    <span class="desc">sin items</span>
+                </div>
+                <div class="flow-item">
+                    <span class="service">CANCELED</span>
+                    <span class="desc">cancelada</span>
+                </div>
+            </div>
+            <hr class="divider">
+            <p class="muted small" style="margin-bottom:6px">Estados del item</p>
+            <div style="display:flex; flex-wrap:wrap; gap:6px">
+                <span class="tag">PENDING</span>
+                <span class="tag">RESERVED</span>
+                <span class="tag a2">FAILED</span>
+                <span class="tag">CONFIRMED</span>
+                <span class="tag">RELEASED</span>
+                <span class="tag">CANCELLED</span>
+            </div>
+        </div>
+        <div>
+            <p class="muted small" style="margin-bottom:10px">Endpoints principales</p>
+            <div class="section-card">
+                <p class="title">POST /api/orderitem</p>
+                <p class="desc">Agrega item — crea orden DRAFT si no existe</p>
+            </div>
+            <div class="section-card">
+                <p class="title">GET /api/orders/{id}</p>
+                <p class="desc">Consulta orden con items y total</p>
+            </div>
+            <div class="section-card">
+                <p class="title">POST /api/orders/{id}/confirm</p>
+                <p class="desc">Confirma orden — items RESERVED → CONFIRMED</p>
+            </div>
+            <hr class="divider">
+            <p class="muted small accent2">El total solo suma items en <code>RESERVED</code> o <code>CONFIRMED</code></p>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 10 — HU5 -->
+<section data-background="#1e1e2e">
+    <h2>HU5 — Modificar orden</h2>
+    <div class="grid-2" style="margin-top:10px">
+        <div>
+            <p class="muted small" style="margin-bottom:10px">Operaciones disponibles</p>
+            <div class="section-card">
+                <p class="title">Agregar item existente</p>
+                <p class="desc">Si el producto ya está en la orden — suma la cantidad</p>
+            </div>
+            <div class="section-card">
+                <p class="title">Eliminar item</p>
+                <p class="desc"><code>DELETE /api/orders/{id}/items/{productId}</code></p>
+                <p class="desc">Libera el stock reservado automáticamente</p>
+            </div>
+            <div class="section-card a2">
+                <p class="title a2">Último item eliminado</p>
+                <p class="desc">La orden pasa a <code>ABANDONED</code> automáticamente</p>
+            </div>
+        </div>
+        <div>
+            <p class="muted small" style="margin-bottom:10px">Validaciones en el dominio</p>
+            <div class="section-card">
+                <p class="title">Solo órdenes DRAFT</p>
+                <p class="desc">La validación vive en la entidad — no en el handler ni en el use case</p>
+            </div>
+            <div class="section-card a2">
+                <p class="title a2">Liberación de stock</p>
+                <p class="desc">ms-orders publica <code>stock-release-requested</code> → ms-inventory devuelve el stock y registra movimiento <code>RELEASED</code></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 11 — HU6 -->
+<section data-background="#1e1e2e">
+    <h2>HU6 — Notificaciones</h2>
+    <div class="grid-2" style="margin-top:10px">
+        <div>
+            <p class="muted small" style="margin-bottom:10px">ms-notifications escucha</p>
+            <div class="flow">
+                <div class="flow-item">
+                    <span class="service">order-created</span>
+                    <span class="desc">→ ORDER_CREATED</span>
+                </div>
+                <div class="flow-item">
+                    <span class="service">order-confirmed</span>
+                    <span class="desc">→ ORDER_CONFIRMED</span>
+                </div>
+                <div class="flow-item">
+                    <span class="service">order-abandoned</span>
+                    <span class="desc">→ ORDER_ABANDONED</span>
+                </div>
+                <div class="flow-item">
+                    <span class="service">order-cancelled</span>
+                    <span class="desc">→ ORDER_CANCELLED</span>
+                </div>
+            </div>
+            <hr class="divider">
+            <p class="muted small">Cada notificación se guarda en <code>db-notifications</code></p>
+            <p class="small" style="margin-top:6px">Estados: <span class="tag">PENDING</span> <span class="tag">SENT</span> <span class="tag a2">FAILED</span></p>
+        </div>
+        <div>
+            <p class="muted small" style="margin-bottom:10px">Implementación actual</p>
+            <div class="section-card">
+                <p class="title">Mock Email</p>
+                <p class="desc">Simula el envío con un log</p>
+            </div>
+            <div class="section-card a2">
+                <p class="title a2">Mejora planificada — AWS SES (Simple Email Service)</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SLIDE 12 — HU7 -->
+<section data-background="#1e1e2e">
+    <h2 style="color:var(--accent2)">HU7 — Reporte de ventas</h2>
     <div style="margin-top:20px">
-        <div class="flow-step">
-            <span class="icon" style="font-size:1.2em">🛒</span>
+        <p class="muted small">No implementado en este sprint — pero la arquitectura lo soporta</p>
+        <hr class="divider">
+        <div class="grid-2" style="margin-top:10px">
             <div>
-                <p class="highlight small">ms-orders agrega item</p>
-                <p class="small" style="color:#aaa">Guarda item en PENDING → publica <span class="tag">stock-reserve-requested</span></p>
+                <p class="muted small" style="margin-bottom:10px">Mismo patrón que HU3</p>
+                <div class="flow">
+                    <div class="flow-item">
+                        <span class="service a2">EventBridge</span>
+                        <span class="desc">cada 7 días</span>
+                    </div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-item">
+                        <span class="service a2">SQS</span>
+                        <span class="desc">cola de mensajes</span>
+                    </div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-item">
+                        <span class="service">ms-orders</span>
+                        <span class="desc">genera reporte</span>
+                    </div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-item">
+                        <span class="service a2">S3</span>
+                        <span class="desc">almacena CSV</span>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div style="text-align:center; color:var(--primary)">↓</div>
-        <div class="flow-step">
-            <span class="icon" style="font-size:1.2em">📦</span>
             <div>
-                <p class="highlight small">ms-inventory valida stock</p>
-                <p class="small" style="color:#aaa">
-                    Stock OK → <span class="tag">stock-reserved</span> |
-                    Sin stock → <span class="tag">stock-reserve-failed</span>
-                </p>
+                <p class="muted small" style="margin-bottom:10px">Contenido del reporte</p>
+                <ul>
+                    <li>Total de ventas del período</li>
+                    <li>Productos más vendidos</li>
+                    <li>Clientes más frecuentes</li>
+                    <li>Exportado en CSV</li>
+                </ul>
+                <hr class="divider">
             </div>
         </div>
-        <div style="text-align:center; color:var(--primary)">↓</div>
-        <div class="flow-step">
-            <span class="icon" style="font-size:1.2em">🛒</span>
+    </div>
+</section>
+
+<!-- SLIDE 13 — HU8 -->
+<section data-background="#1e1e2e">
+    <h2 style="color:var(--accent2)">HU8 — Carritos abandonados</h2>
+    <div style="margin-top:20px">
+        <p class="muted small">No implementado — solución técnica diseñada considerando escalabilidad</p>
+        <hr class="divider">
+        <div class="grid-2" style="margin-top:10px">
             <div>
-                <p class="highlight small">ms-orders actualiza estado</p>
-                <p class="small" style="color:#aaa">
-                    Item → <span class="tag">RESERVED</span> o <span class="tag">FAILED</span>
-                </p>
+                <p class="muted small" style="margin-bottom:10px">¿Por qué no polling?</p>
+                <div class="section-card muted">
+                    <p class="title muted">Polling masivo — descartado</p>
+                    <p class="desc">Escanear toda la tabla cada X minutos — costoso y no escalable</p>
+                </div>
+                <div class="section-card a2">
+                    <p class="title a2">SQS con delay — propuesto</p>
+                    <p class="desc">Al crear la orden se publica un mensaje con delay de 30 min — solo se verifica esa orden específica</p>
+                </div>
             </div>
-        </div>
-        <div style="text-align:center; color:var(--primary)">↓</div>
-        <div class="flow-step">
-            <span class="icon" style="font-size:1.2em">🔔</span>
             <div>
-                <p class="highlight small">ms-notifications notifica</p>
-                <p class="small" style="color:#aaa">Consume <span class="tag">order-created</span> → guarda notificación</p>
+                <p class="muted small" style="margin-bottom:10px">Flujo propuesto</p>
+                <div class="flow">
+                    <div class="flow-item">
+                        <span class="service">Orden DRAFT</span>
+                        <span class="desc">publica en SQS con delay</span>
+                    </div>
+                    <div class="flow-arrow">↓ 30 minutos después</div>
+                    <div class="flow-item">
+                        <span class="service">ms-orders</span>
+                        <span class="desc">¿sigue en DRAFT?</span>
+                    </div>
+                    <div class="flow-arrow">↓ si → abandon() · no → descarta</div>
+                    <div class="flow-item">
+                        <span class="service a2">ms-notifications</span>
+                        <span class="desc">envía recordatorio</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- SLIDE 5 — AWS -->
-<!-- ═══════════════════════════════════════ -->
-<section data-background="#1a1a2e">
-    <h2>Infraestructura AWS</h2>
-    <p class="small" style="color:#aaa">Simulada con LocalStack — definida como código en CloudFormation</p>
-    <div class="grid-2" style="margin-top:20px">
-        <div>
-            <div class="ms-card">
-                <p>🔐 <span class="highlight">Secrets Manager</span></p>
-                <p class="small" style="color:#aaa">Credenciales de DB y Kafka — sin hardcodear</p>
-            </div>
-            <div class="ms-card">
-                <p>🪣 <span class="highlight">S3</span></p>
-                <p class="small" style="color:#aaa">Reportes CSV de bajo stock</p>
-            </div>
-            <div class="ms-card">
-                <p>📬 <span class="highlight">SQS</span></p>
-                <p class="small" style="color:#aaa">Cola para reportes programados</p>
-            </div>
-        </div>
-        <div>
-            <div class="ms-card">
-                <p>⏰ <span class="highlight">EventBridge</span></p>
-                <p class="small" style="color:#aaa">Regla cada 10 min → dispara reporte</p>
-            </div>
-            <div class="ms-card">
-                <p>📧 <span class="highlight">SES</span></p>
-                <p class="small" style="color:#aaa">Envío de correos — preparado, pendiente dominio</p>
-            </div>
-            <div class="card small" style="margin-top:10px">
-                <p class="highlight">Infrastructure as Code</p>
-                <p style="color:#aaa">Todo definido en <span class="tag">CloudFormation</span> — se despliega automáticamente</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ═══════════════════════════════════════ -->
-<!-- SLIDE 6 — HISTORIAS DE USUARIO -->
-<!-- ═══════════════════════════════════════ -->
-<section data-background="#1a1a2e">
-    <h2>Historias de Usuario</h2>
-    <div class="grid-2" style="margin-top:20px">
-        <div>
-            <div class="ms-card">
-                <p><span class="tag">HU1</span> <span class="highlight">Registro de productos</span></p>
-                <p class="small" style="color:#aaa">Validación en DTO + GlobalExceptionHandler</p>
-            </div>
-            <div class="ms-card">
-                <p><span class="tag">HU2</span> <span class="highlight">Actualización de stock</span></p>
-                <p class="small" style="color:#aaa">Manual + automático via Kafka + StockMovements</p>
-            </div>
-            <div class="ms-card">
-                <p><span class="tag">HU3</span> <span class="highlight">Reporte bajo stock</span></p>
-                <p class="small" style="color:#aaa">EventBridge → SQS → CSV → S3</p>
-            </div>
-            <div class="ms-card">
-                <p><span class="tag">HU4</span> <span class="highlight">Orden de compra</span></p>
-                <p class="small" style="color:#aaa">Saga coreografiada + estados de items</p>
-            </div>
-        </div>
-        <div>
-            <div class="ms-card">
-                <p><span class="tag">HU5</span> <span class="highlight">Modificar orden</span></p>
-                <p class="small" style="color:#aaa">Solo DRAFT + liberación de stock</p>
-            </div>
-            <div class="ms-card">
-                <p><span class="tag">HU6</span> <span class="highlight">Notificaciones</span></p>
-                <p class="small" style="color:#aaa">ms-notifications + mock email + SES preparado</p>
-            </div>
-            <div class="ms-card" style="border-color:#666">
-                <p><span class="tag red">HU7</span> <span class="highlight">Reporte de ventas</span></p>
-                <p class="small" style="color:#aaa">No implementado — mismo patrón HU3</p>
-            </div>
-            <div class="ms-card" style="border-color:#666">
-                <p><span class="tag red">HU8</span> <span class="highlight">Carritos abandonados</span></p>
-                <p class="small" style="color:#aaa">No implementado — SQS con delay propuesto</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ═══════════════════════════════════════ -->
-<!-- SLIDE 7 — PROGRAMACIÓN REACTIVA -->
-<!-- ═══════════════════════════════════════ -->
-<section data-background="#1a1a2e">
-    <h2>¿Por qué programación reactiva?</h2>
-    <div class="grid-2" style="margin-top:20px">
-        <div class="card">
-            <p class="highlight center">JPA — Bloqueante</p>
-            <div class="small" style="color:#aaa; margin-top:10px">
-                <p>Hilo 1 → consulta DB</p>
-                <p style="color:#FF6B6B">⏳ esperando...</p>
-                <p>Hilo 1 → recibe respuesta</p>
-                <p style="margin-top:10px">100 peticiones = 100 hilos bloqueados</p>
-            </div>
-        </div>
-        <div class="card">
-            <p class="highlight center">R2DBC — No bloqueante</p>
-            <div class="small" style="color:#aaa; margin-top:10px">
-                <p>Hilo 1 → consulta DB</p>
-                <p style="color:var(--primary)">→ atiende otra petición</p>
-                <p>DB responde → Hilo 1 continúa</p>
-                <p style="margin-top:10px">100 peticiones = pocos hilos</p>
-            </div>
-        </div>
-    </div>
-    <div class="card small" style="margin-top:20px">
-        <p class="highlight">La diferencia práctica con JPA</p>
-        <p style="color:#aaa">Sin <code>@OneToMany</code> ni cascade — cada operación es explícita y encadenada con <span class="tag">flatMap</span></p>
-    </div>
-</section>
-
-<!-- ═══════════════════════════════════════ -->
-<!-- SLIDE 8 — BUENAS PRÁCTICAS -->
-<!-- ═══════════════════════════════════════ -->
-<section data-background="#1a1a2e">
-    <h2>Buenas prácticas aplicadas</h2>
-    <div class="grid-2" style="margin-top:20px">
-        <div>
-            <div class="ms-card">
-                <p>🎯 <span class="highlight">SOLID — SRP</span></p>
-                <p class="small" style="color:#aaa">Cada clase tiene una sola razón para cambiar</p>
-            </div>
-            <div class="ms-card">
-                <p>🔄 <span class="highlight">SOLID — DIP</span></p>
-                <p class="small" style="color:#aaa">Casos de uso dependen de interfaces, no implementaciones</p>
-            </div>
-            <div class="ms-card">
-                <p>🚫 <span class="highlight">DRY</span></p>
-                <p class="small" style="color:#aaa">Mappers centralizados para transformación entre capas</p>
-            </div>
-        </div>
-        <div>
-            <div class="ms-card">
-                <p>⚡ <span class="highlight">KISS</span></p>
-                <p class="small" style="color:#aaa">Métodos cortos con nombres descriptivos</p>
-            </div>
-            <div class="ms-card">
-                <p>🛡️ <span class="highlight">Excepciones centralizadas</span></p>
-                <p class="small" style="color:#aaa">GlobalExceptionHandler → códigos HTTP semánticos</p>
-            </div>
-            <div class="ms-card">
-                <p>✅ <span class="highlight">Validación en dominio</span></p>
-                <p class="small" style="color:#aaa">Las reglas de negocio viven en las entidades</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ═══════════════════════════════════════ -->
-<!-- SLIDE 9 — CICD -->
-<!-- ═══════════════════════════════════════ -->
-<section data-background="#1a1a2e">
-    <h2>CI/CD y DevOps</h2>
-    <div class="grid-2" style="margin-top:20px">
-        <div>
-            <div class="ms-card">
-                <p>🐳 <span class="highlight">Docker Compose</span></p>
-                <p class="small" style="color:#aaa">Ambiente completo con un solo comando</p>
-                <code class="small" style="color:var(--primary)">docker compose up -d</code>
-            </div>
-            <div class="ms-card">
-                <p>⚙️ <span class="highlight">GitHub Actions</span></p>
-                <p class="small" style="color:#aaa">Deploy automático de documentación a GitHub Pages</p>
-            </div>
-        </div>
-        <div>
-            <div class="ms-card">
-                <p>🏗️ <span class="highlight">Infrastructure as Code</span></p>
-                <p class="small" style="color:#aaa">CloudFormation define toda la infra AWS</p>
-            </div>
-            <div class="ms-card">
-                <p>🔐 <span class="highlight">Secrets Management</span></p>
-                <p class="small" style="color:#aaa">Credenciales en AWS Secrets Manager — nunca en el código</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ═══════════════════════════════════════ -->
-<!-- SLIDE 10 — REFLEXIÓN -->
-<!-- ═══════════════════════════════════════ -->
-<section data-background="#1a1a2e">
+<!-- SLIDE 14 — REFLEXIÓN -->
+<section data-background="#1e1e2e">
     <h2>Reflexión y cierre</h2>
-    <div class="grid-2" style="margin-top:20px">
+    <div class="grid-2" style="margin-top:10px">
         <div>
-            <div class="card">
-                <p class="highlight">✅ Logros</p>
-                <ul class="small" style="color:#aaa">
-                    <li>3 microservicios funcionando</li>
-                    <li>Saga coreografiada con Kafka</li>
-                    <li>Integración con AWS LocalStack</li>
-                    <li>Arquitectura hexagonal aplicada</li>
-                    <li>6 de 8 HUs implementadas</li>
-                </ul>
-            </div>
+            <p class="muted small" style="margin-bottom:10px">Logros</p>
+            <ul>
+                <li>3 microservicios funcionando</li>
+                <li>Saga coreografiada con Kafka</li>
+                <li>Integración con 5 servicios AWS</li>
+                <li>Arquitectura hexagonal aplicada</li>
+                <li>6 de 8 HUs implementadas</li>
+                <li>Infraestructura como código</li>
+            </ul>
         </div>
         <div>
-            <div class="card">
-                <p class="highlight" style="color:#FF6B6B">⚠️ Deuda técnica</p>
-                <ul class="small" style="color:#aaa">
-                    <li>Pruebas unitarias pendientes</li>
-                    <li>Swagger con incompatibilidades</li>
-                    <li>Transacciones no implementadas</li>
-                    <li>HU7 y HU8 pendientes</li>
-                </ul>
-            </div>
+            <p class="accent2 small" style="margin-bottom:10px">Deuda técnica</p>
+            <ul>
+                <li class="a2">Pruebas unitarias no implementadas</li>
+                <li class="a2">Swagger con incompatibilidades</li>
+                <li class="a2">HU7 y HU8 pendientes</li>
+            </ul>
+            <hr class="divider">
+            <p class="muted small" style="margin-bottom:6px">Próximos pasos</p>
+            <ul>
+                <li>TDD — pruebas desde el inicio</li>
+                <li>Frontend para visualización</li>
+                <li>Despliegue en AWS real</li>
+            </ul>
         </div>
     </div>
-    <div class="card small" style="margin-top:20px; text-align:center">
-        <p style="color:#aaa; font-style:italic">
-            "El conocimiento se consolida cuando se aplica. Este proyecto es solo el comienzo."
-        </p>
-        <p class="highlight">Diego Alexander Zambrano S.</p>
-    </div>
+    <hr class="divider">
 </section>
 
-<!-- ═══════════════════════════════════════ -->
-<!-- SLIDE 11 — LINKS -->
-<!-- ═══════════════════════════════════════ -->
-<section data-background="#1a1a2e" class="center">
-    <div style="text-align:center">
+<!-- SLIDE 15 — LINKS -->
+<section data-background="#1e1e2e" class="center">
+    <div style="text-align:center; padding-top:40px">
         <h2>Recursos</h2>
         <div style="margin-top:40px">
-            <div class="ms-card" style="text-align:center; margin-bottom:20px">
-                <p class="highlight">📚 Documentación completa</p>
-                <p class="small" style="color:var(--primary)">
-                    https://diegoalex029.github.io/arka-presentacion/
-                </p>
-            </div>
-            <div class="ms-card" style="text-align:center">
-                <p class="highlight">💻 Repositorio</p>
-                <p class="small" style="color:var(--primary)">
-                    https://github.com/diegoalex029
-                </p>
-            </div>
+            <p class="muted small">Documentación completa</p>
+            <p class="accent">https://diegoalex029.github.io/arka-presentacion/</p>
+            <hr class="divider" style="width:200px; margin:30px auto">
+            <p class="muted small">Repositorio</p>
+            <p class="accent">https://github.com/diegoalex029</p>
         </div>
     </div>
 </section>
@@ -463,16 +657,19 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.6.1/reveal.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script>
     Reveal.initialize({
         hash: true,
-        transition: 'slide',
+        transition: 'fade',
         transitionSpeed: 'fast',
         controls: true,
         progress: true,
         center: false,
-        plugins: []
+        width: 960,
+        height: 600,
+        margin: 0.02,
+        minScale: 0.2,
+        maxScale: 2.0,
     });
 </script>
 </body>
